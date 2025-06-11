@@ -1,0 +1,27 @@
+# This file is essentially the instruction manual for CodeDeploy.
+# Each phase in the appspec.yml file is a CodeDeploy lifecycle event. 
+# Lifecycle events are like the chapters in your deployment story - 
+# predefined points where you can hook in custom scripts to perform specific actions. 
+# They're the key to customizing exactly how your application gets deployed.
+
+version: 0.0  # This is just the format version CodeDeploy expects.
+os: linux # Tells CodeDeploy we're deploying to a Linux system, not Windows.
+
+files: # This section maps what files go where:
+  - source: /target/nextwork-web-project.war
+    destination: /usr/share/tomcat/webapps/
+
+hooks: # These are like event triggers that run at specific points in the deployment:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_server.sh
+      timeout: 300
+      runas: root
+

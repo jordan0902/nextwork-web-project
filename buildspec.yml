@@ -1,3 +1,8 @@
+# This file is like the recipe card for AWS CodeBuild. 
+# It contains step-by-step instructions that tell CodeBuild exactly 
+# how to turn your raw code into a deployable package. 
+# In this project, it tells CodeBuild how to compile the Java application, 
+# run any tests, and then package up everything needed for deployment.
 version: 0.2
 
 phases:
@@ -21,10 +26,16 @@ phases:
     commands:
       - echo Build completed on `date`
       - mvn -s settings.xml package
-artifacts:
+
+# After build the app, make sure to include these additional files in the final package.
+# We're adding our appspec.yml and scripts folder because CodeDeploy will need them to properly
+# deploy the application. Without them, CodeDeploy wouldn't know what to do with our compiled code!
+artifacts: 
   files:
-    - target/nextwork-web-project.war
-    - target/surefire-reports/**/* # 保存测试报告
+    - target/nextwork-web-project.war #Build App
+    - target/surefire-reports/**/* # save test report
+    - appspec.yml # 
+    - scripts/**/*
   discard-paths: no
 
 cache:
