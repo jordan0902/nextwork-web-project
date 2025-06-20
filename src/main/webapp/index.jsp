@@ -18,5 +18,9 @@
 <p>changed again!!!!!!!!!!!!</p>
 
 <p>changed GitHub Connection </p>
+
+<p>After re-configuration of Connection and Role Policy, It should be automate the CI/CD Process from CodePipeline</p>
+
+
 </body>
 </html>
